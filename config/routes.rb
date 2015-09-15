@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
 
+  get '/login', to: 'sessions#new'
+  post '/sessions', to: 'sessions#create'
+  delete '/sessions', to: 'sessions#destroy'
+
   resources :users
-  get '/recent', to: 'users#recent'
+  resources :chirps
+  get '/profile', to: 'users#profile'
   # get '/users', to: 'users#index'
   # post '/users', to: 'users#create'
   # get '/users/new', to: 'users#new', as: 'new_user'
@@ -12,5 +17,5 @@ Rails.application.routes.draw do
   # delete '/users/:id', to: 'users#destroy'
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'chirps#index'
 end

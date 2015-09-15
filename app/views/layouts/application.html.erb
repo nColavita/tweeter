@@ -8,16 +8,25 @@
 </head>
 <body>
 	<header>
+		<%= link_to 'Tweeter', root_path %>
 		<nav>
-			<%= link_to 'home', root_path %>
-			<%= link_to 'sign up', new_user_path %>
+			<% if current_user %>
+				<span>Hello <%= link_to current_user.username, profile_path %></span>
+				<%= link_to 'sign out', sessions_path, method: :delete %>
+				<%= link_to 'new chirp', new_chirp_path %>
+			<% else %>
+				<%= link_to 'sign up', new_user_path %>
+				<%= link_to 'sign in', login_path %>
+			<% end %>
 		</nav>
 	</header>
-	<% if flash[:notice] %>
-		<div><%= flash[:notice] %></div>
-	<% end %>
+	<main>
+		<% if flash[:notice] %>
+			<div class="notice"><%= flash[:notice] %></div>
+		<% end %>
 
-<%= yield %>
+		<%= yield %>
+	</main>
 
 </body>
 </html>

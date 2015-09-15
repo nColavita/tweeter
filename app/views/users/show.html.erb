@@ -1,4 +1,6 @@
 <h1><%= @user.username %></h1>
 <p>Location: <%= @user.location %></p>
 <p>Bio: <%= @user.bio %></p>
-<p><%= link_to 'edit profile', edit_user_path(@user) %></p>
+<% if current_user and @user == current_user %>
+	<p><%= link_to 'edit profile', edit_user_path(@user) %></p>
+<% end %>

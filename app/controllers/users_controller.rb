@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :destroy, :update]
+  before_action :authenticate_user!, only: [:profile, :destroy, :edit, :update]
 
   def index
   	@users = User.all
@@ -15,13 +16,14 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def recent
-  	@user = User.last
+  def profile
+  	@user = current_user
   	render :show
   end
 
   def create
   	@user = User.create(user_params)
+  	session[:user_id] = @user.id
   	redirect_to @user, notice: "New account created!"
   end
 
@@ -32,6 +34,7 @@ class UsersController < ApplicationController
 
   def destroy
   	@user.destroy
+  	session[:user_id] = nil if @user == current_user
   	redirect_to users_path, notice: "User account was deleted."
   end
 

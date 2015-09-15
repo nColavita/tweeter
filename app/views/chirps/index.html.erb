@@ -1,0 +1,8 @@
+<h1>The Feeder</h1>
+<% @chirps.each do |chirp| %>
+	<div class="chirp">
+		<h3><%= chirp.body %></h3>
+		<p>by <%= link_to chirp.user.username, chirp.user %></p>
+	</div>
+<% end %>
+
