@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tweeter</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<header>
+		<nav>
+			<%= link_to 'home', root_path %>
+			<%= link_to 'sign up', new_user_path %>
+		</nav>
+	</header>
+	<% if flash[:notice] %>
+		<div><%= flash[:notice] %></div>
+	<% end %>
+
+<%= yield %>
+
+</body>
+</html>
