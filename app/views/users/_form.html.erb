@@ -1,16 +1,16 @@
 <%= form_for @user do |f| %>
 	<p>
 		<%= f.label :username %>
-		<%= f.text_field :username %>
+		<%= f.text_field :username, required: true %>
 	</p>
 	<p>
 		<%= f.label :email %>
-		<%= f.email_field :email %>
+		<%= f.email_field :email, required: true %>
 	</p>
 	<% if @user.new_record? %>
 		<p>
 			<%= f.label :password %>
-			<%= f.password_field :password %>
+			<%= f.password_field :password, required: true %>
 		</p>
 	<% end %>
 	<p>
