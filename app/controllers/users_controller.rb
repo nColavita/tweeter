@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :destroy, :update]
-  before_action :authenticate_user!, only: [:profile, :destroy, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :destroy, :update, :follow, :unfollow]
+  before_action :authenticate_user!, only: [:profile, :destroy, :edit, :update, :follow, :unfollow]
   before_action :authorize_user, only: [:destroy, :edit, :update]
 
   def index
@@ -39,6 +39,17 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "User account was deleted."
   end
 
+  def follow
+    Relationship.create(follower_id: current_user.id, followed_id: @user.id )
+    redirect_to @user, notice: "Successfully followed #{@user.username}."
+  end
+
+  def unfollow
+    @rel = Relationship.find_by(followed_id: @user.id, follower_id: current_user.id)
+    @rel.destroy
+    redirect_to @user, notice: "Successfully unfollowed #{@user.username}."
+  end
+
   private
 
   def authorize_user
@@ -53,7 +64,16 @@ class UsersController < ApplicationController
 
   def set_user
   	begin
-  		@user = User.find(params[:id])
+      if params[:username]
+        username = params[:username]
+        @user = User.where('lower(username) = ?', username.downcase).first
+        unless @user
+          flash[:notice] = "That user could not be found."
+          redirect_to users_path
+        end
+      else
+        @user = User.find(params[:id])
+      end
   	rescue
   		flash[:notice] = "That user could not be found."
   		redirect_to users_path
