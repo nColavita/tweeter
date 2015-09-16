@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :destroy, :update]
   before_action :authenticate_user!, only: [:profile, :destroy, :edit, :update]
+  before_action :authorize_user, only: [:destroy, :edit, :update]
 
   def index
   	@users = User.all
@@ -33,12 +34,18 @@ class UsersController < ApplicationController
   end
 
   def destroy
-  	@user.destroy
-  	session[:user_id] = nil if @user == current_user
-  	redirect_to users_path, notice: "User account was deleted."
+    @user.destroy
+    session[:user_id] = nil 
+    redirect_to users_path, notice: "User account was deleted."
   end
 
   private
+
+  def authorize_user
+    unless @user == current_user
+      redirect_to root_path, notice: "You do not have permission to do that."
+    end 
+  end
 
   def user_params
   	params.require(:user).permit(:username, :email, :password, :location, :bio)

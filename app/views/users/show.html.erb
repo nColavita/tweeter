@@ -4,3 +4,6 @@
 <% if current_user and @user == current_user %>
 	<p><%= link_to 'edit profile', edit_user_path(@user) %></p>
 <% end %>
+
+<h3><%= @user.username %>'s Chirps</h3>
+<%= render @user.chirps %>

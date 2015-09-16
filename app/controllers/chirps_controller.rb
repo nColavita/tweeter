@@ -3,7 +3,7 @@ class ChirpsController < ApplicationController
 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 	
 	def index
-		@chirps = Chirp.all
+		@chirps = Chirp.last(10).reverse
 	end
 
 	def new
