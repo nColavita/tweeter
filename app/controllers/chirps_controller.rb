@@ -18,7 +18,7 @@ class ChirpsController < ApplicationController
 
 	def create
 		@chirp = Chirp.create(chirp_params)
-		redirect_to @chirp, notice: "Chirp! Chirp! Chirp!"
+		redirect_to chirp_path(@chirp.id), notice: "Chirp! Chirp! Chirp!"
 	end
 
 	def update
