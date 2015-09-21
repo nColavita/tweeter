@@ -1,6 +1,5 @@
 <div class="chirp">
-	<h3><%= chirp.body %></h3>
-	<p>by <%= link_to chirp.user.username, profile_user_path(chirp.user.username) %> | 
-		<%= link_to 'show', chirp %>
+	<%= content_tag :h3, chirp.body %>
+	<p>by <%= link_to chirp.user.username, profile_user_path(chirp.user.username) %> <%= link_to(time_ago_in_words(chirp.created_at), chirp) %> ago
 	</p>
 </div>

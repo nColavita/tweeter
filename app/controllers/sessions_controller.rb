@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   		session[:user_id] = @user.id
   		redirect_to chirps_path, notice: "logged in!"
   	else
-  		redirect_to login_path, notice: "Login info was not correct!"
+  		redirect_to login_path, alert: "Login info was not correct!"
   	end
   end
 

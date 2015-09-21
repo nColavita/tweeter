@@ -23,14 +23,21 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.create(user_params)
-  	session[:user_id] = @user.id
-  	redirect_to @user, notice: "New account created!"
+  	@user = User.new(user_params)
+    if @user.save
+  	 session[:user_id] = @user.id
+  	 redirect_to @user, notice: "New account created!"
+    else
+      render :new
+    end
   end
 
   def update
-  	@user.update(user_params)
-  	redirect_to @user, notice: "Account updated!"
+    if @user.update(user_params)
+      redirect_to @user, notice: "Account updated!"
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -59,7 +66,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-  	params.require(:user).permit(:username, :email, :password, :location, :bio)
+  	params.require(:user).permit(:username, :email, :password, :password_confirmation, :location, :bio)
   end
 
   def set_user

@@ -17,13 +17,20 @@ class ChirpsController < ApplicationController
 	end
 
 	def create
-		@chirp = Chirp.create(chirp_params)
-		redirect_to chirp_path(@chirp.id), notice: "Chirp! Chirp! Chirp!"
+		@chirp = Chirp.new(chirp_params)
+		if @chirp.save
+			redirect_to chirp_path(@chirp.id), notice: "Chirp! Chirp! Chirp!"
+		else
+			render :new
+		end
 	end
 
 	def update
-		@chirp.update(chirp_params)
-		redirect_to @chirp, notice: "Chirp updated! Chirp! Chirp!"
+		if @chirp.update(chirp_params)
+			redirect_to @chirp, notice: "Chirp updated! Chirp! Chirp!"
+		else
+			render :edit
+		end
 	end
 
 	def destroy

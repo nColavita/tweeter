@@ -1,4 +1,13 @@
 <%= form_for @user do |f| %>
+	<% if @user.errors.any? %>
+		<div class="alert">
+			<p>There was a problem:</p>
+		<% @user.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</div>
+	<% end %>
+
 	<p>
 		<%= f.label :username %>
 		<%= f.text_field :username, required: true %>
@@ -11,6 +20,10 @@
 		<p>
 			<%= f.label :password %>
 			<%= f.password_field :password, required: true %>
+		</p>
+		<p>
+			<%= f.label :password_confirmation %>
+			<%= f.password_field :password_confirmation, required: true %>
 		</p>
 	<% end %>
 	<p>

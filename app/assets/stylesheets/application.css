@@ -69,6 +69,10 @@ a {
 	border-bottom: 1px solid #EBF7FF;
 }
 
+img {
+	width: 100%;
+}
+
 input[type="text"], input[type="email"], input[type="password"], textarea {
 	padding: .75em;
 	width: 100%;
